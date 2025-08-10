@@ -11,16 +11,16 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="">
+    <link rel="shortcut icon" href="images/favicon.png" type="">
     <title>Famms - Fashion HTML Template</title>
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('home/css/bootstrap.css')}}" />
+    <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
     <!-- font awesome style -->
-    <link href="{{asset('home/css/font-awesome.min.css')}}" rel="stylesheet" />
+    <link href="home/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="{{asset('home/css/style.css')}}" rel="stylesheet" />
+    <link href="home/css/style.css" rel="stylesheet" />
     <!-- responsive style -->
-    <link href="{{asset('home/css/responsive.css')}}" rel="stylesheet" />
+    <link href="home/css/responsive.css" rel="stylesheet" />
     <!-- Bootstrap JS for dropdowns -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
