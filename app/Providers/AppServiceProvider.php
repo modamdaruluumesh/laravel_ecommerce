@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Config;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,10 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (env('CODESPACES') && env('CODESPACE_NAME') && env('GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN')) {
-            $codespaceUrl = 'https://' . env('CODESPACE_NAME') . '-8000.' . env('GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN');
-            URL::forceRootUrl($codespaceUrl);
-            URL::forceScheme('https');
-        }
+        $codespaceUrl = 'https://fictional-train-x5qv4x654jr4f679-8000.app.github.dev';
+        Config::set('app.url', $codespaceUrl);
+        URL::forceRootUrl($codespaceUrl);
+
+        // Force HTTPS
+        URL::forceScheme('https');
     }
 }

@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL'),
+    'url' => env('APP_URL','https://fictional-train-x5qv4x654jr4f679-8000.app.github.dev'),
 
     /*
     |--------------------------------------------------------------------------
