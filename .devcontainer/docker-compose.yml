@@ -1,36 +1,58 @@
 version: '3.8'
 
-services: 
+services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-
     volumes:
-      - ../..:/workspaces:cached
-
-    # Overrides default command so things don't shut down after the process ends.
+      - ..:/workspace:cached
     command: sleep infinity
-
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
-
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    networks:
+      - laravel
+    depends_on:
+      - db
+      - redis
+      - mailhog
 
   db:
-    image: mariadb:10.4
+    image: mysql:8.0
     restart: unless-stopped
-    volumes:
-      - mariadb-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: mariadb
-      MYSQL_DATABASE: mariadb
-      MYSQL_USER: mariadb
-      MYSQL_PASSWORD: mariadb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    networks:
+      - laravel
 
-    # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
-  
-volumes:
-  mariadb-data:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: laravel
+      PMA_PASSWORD: laravel
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8080:80"
+    networks:
+      - laravel
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - laravel
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge
