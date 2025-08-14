@@ -4,12 +4,11 @@ import laravel from 'laravel-vite-plugin';
 export default defineConfig({
     server: {
         host: '0.0.0.0',
+        port: 5173, // keep vite's port separate from Laravel's
         hmr: {
-            host: process.env.CODESPACE_NAME
-                ? `${process.env.CODESPACE_NAME}-5173.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`
-                : 'localhost',
-            protocol: 'https',
-        },
+            host: 'legendary-garbanzo-q7x7xg6g6j6g7-8000.app.github.dev',
+            protocol: 'wss'
+        }
     },
     plugins: [
         laravel({

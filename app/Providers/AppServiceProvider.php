@@ -2,30 +2,32 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        $codespaceUrl = 'https://fictional-train-x5qv4x654jr4f679-8000.app.github.dev';
-        Config::set('app.url', $codespaceUrl);
-        URL::forceRootUrl($codespaceUrl);
+        // Get APP_URL from .env
+        $appUrl = config('app.url');
 
-        // Force HTTPS
-        URL::forceScheme('https');
+        if ($appUrl) {
+            // Remove any trailing slash just in case
+            $appUrl = rtrim($appUrl, '/');
+
+            // Force Laravel to use this as the root URL
+            URL::forceRootUrl($appUrl);
+
+            // If it’s https, make sure scheme is forced
+            if (str_starts_with($appUrl, 'https://')) {
+                URL::forceScheme('https');
+            }
+        }
     }
 }
